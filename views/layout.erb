@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Contact list</title>
+    <link href="css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8" />
+  </head>
+  <body>
+  
+    <div id="layout-wrapper">
+      <% if session[:message] %>
+        <p class="message"><%= session.delete(:message) %></p>
+      <% end %>
+      
+      <header>
+        <h1>Contact List App</h1>
+      </header>
+      
+      <main>
+        <%= yield %>
+      </main>
+    </div>
+  
+  </body>
+</html>

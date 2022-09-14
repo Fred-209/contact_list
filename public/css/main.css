@@ -1,0 +1,50 @@
+body {
+  margin: 15px;
+  height: 100vh;
+}
+
+main {
+  display: contents;
+}
+
+
+#layout-wrapper {
+  display: grid;
+  width: 75%;
+  margin: auto;
+  place-items: center;
+  grid-template-rows: 1fr 2fr;
+}
+
+#sign-in-container {
+  display: grid;
+  place-items: center;
+}
+
+#sign-in-container button {
+  margin: 10px;
+}
+
+#sign-in-form {
+  display: grid;
+  place-items: center;
+  grid-template-rows: 1fr 1fr;
+  gap: 5px;
+}
+
+#new-user-container {
+  display: grid;
+  place-items: center;
+}
+
+#new-user-form {
+  display: grid;
+  place-items: center;
+}
+
+#new-user-form input[type="submit"] {
+  place-self: stretch;
+  margin-top: 5px;
+}
+
+

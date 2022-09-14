@@ -1,0 +1,20 @@
+---
+:test_user:
+- :first_name: Test_contact_1
+  :last_name: McTester
+  :email: tester@testy.com
+  :telephone: '5555555555'
+- :first_name: Test_contat_2
+  :last_name: McTester
+  :email: tester2@testy.com
+  :telephone: '5555555550'
+:new_test_user:
+- :first_name: Jack
+  :last_name: Johnson
+  :email: jjohnson@gmail.com
+  :telephone: '5556667777'
+new_test_user:
+- :first_name: 
+  :last_name: 
+  :email: 
+  :telephone: 

@@ -1,0 +1,18 @@
+<section id="sign-in-container">
+  <h3>Please sign in to continue</h3>
+  <form id="sign-in-form" action="/sign_in" method="post">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" maxlength=20 required />
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" maxlength="20" required >
+    </div>
+
+    <div>
+      <input type="submit" value="Login" />
+    </div>
+  </form>
+
+  <button><a href="/new_user">Create New User</a></button>
+</section>

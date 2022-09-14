@@ -1,0 +1,16 @@
+<section id="new-user-container">
+  <h2>Create a New Login</h2>
+  <p>This will allow you to login to the site and have your own custom contact list.</p>
+  <p>Choose a username and password</p>
+  <form id="new-user-form" action="/new_user" method="post">
+    <div>
+      <label for="username">New Username:</label>
+      <input type="text" id="username" name="username" maxlength=20 required />
+
+      <label for="password">New Password:</label>
+      <input type="password" id="password" name="password" maxlength=20 required />
+    </div>
+    
+    <input type="submit" value="Create New User" />
+  </form>
+</section>
