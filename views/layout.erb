@@ -2,12 +2,12 @@
 <html lang="en">
   <head>
     <title>Contact list</title>
-    <link href="css/normalize.css" rel="stylesheet" type="text/css">
-    <link href="css/main.css" rel="stylesheet" type="text/css">
+    <link href="/css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
     <meta charset="utf-8" />
   </head>
   <body>
-  
+
     <div id="layout-wrapper">
       <% if session[:message] %>
         <p class="message"><%= session.delete(:message) %></p>
@@ -20,6 +20,15 @@
       <main>
         <%= yield %>
       </main>
+      <footer>
+        <% if signed_in? %>
+          <p>Signed in as <%= session[:username] %></p>
+          <form action="/sign_out" method="post">
+            <input type="submit" name="sign_out" value="Sign Out" />
+          </form>
+
+        <% end %>
+      </footer>
     </div>
   
   </body>

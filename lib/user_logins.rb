@@ -36,7 +36,7 @@ class UserLogins
     save_users_list
   end 
 
-  def valid_user_password?(username, password)
+  def correct_user_password?(username, password)
     BCrypt::Password.new(user_list[username]) == password
   end
 

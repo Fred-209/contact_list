@@ -1,0 +1,49 @@
+<section class="show-contacts-page-container">
+  <h2><%= "#{session[:username]}'s Contacts" %></h2>
+  <div id="headers">
+    <span>
+      <strong>First Name</strong>
+    </span>
+    <span>
+      <strong>Last Name</strong>
+    </span>
+    <span>
+      <strong>Email Address</strong>
+    </span>
+    <span>
+      <strong>Telephone</strong>
+    </span>
+  </div>
+
+  <% if @contacts.empty? %>
+    <p>No Contacts to Display</p>
+  <% else %>
+    <% @contacts.each do |contact| %>
+      <div class="display-contact-row">
+        <span>
+          <%= contact[:first_name] %>
+        </span>
+        <span>
+          <%= contact[:last_name] %>
+        </span>
+        <span>
+          <%= contact[:email] %>
+        </span>
+        <span>
+          <%= contact[:telephone] %>
+        </span>
+      </div>
+    <% end %>
+  <% end %>
+  <%# <div class="contact-row">
+    <span class="contact-button">
+        <button>Edit</button>
+      </span>
+      <span class="contact-button">
+        <button>Delete</button>
+    </span>
+  </div> %>
+  <button>
+    <a href="/create_contact">Create New Contact</a>
+  </button>
+</section>

@@ -5,12 +5,15 @@
   <form id="new-user-form" action="/new_user" method="post">
     <div>
       <label for="username">New Username:</label>
-      <input type="text" id="username" name="username" maxlength=20 required />
+      <input type="text" id="username" name="username" maxlength=20 required 
+             size=25 placeholder="no spaces, case insensitive"/>
 
       <label for="password">New Password:</label>
-      <input type="password" id="password" name="password" maxlength=20 required />
+      <input type="password" id="password" name="password" maxlength=20 required 
+             size=25 placeholder="no spaces, case sensitive" />
     </div>
     
     <input type="submit" value="Create New User" />
+    <button><a href="/sign_in">Go Back and Log In Instead</a></button>
   </form>
 </section>

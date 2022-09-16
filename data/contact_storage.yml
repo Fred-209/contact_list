@@ -9,12 +9,34 @@
   :email: tester2@testy.com
   :telephone: '5555555550'
 :new_test_user:
-- :first_name: Jack
-  :last_name: Johnson
-  :email: jjohnson@gmail.com
-  :telephone: '5556667777'
-new_test_user:
 - :first_name: 
   :last_name: 
   :email: 
   :telephone: 
+:admin:
+- :first_name: sdfasf
+  :last_name: asdfasf
+  :email: asdfasf@gmail.com
+  :telephone: asdfsaf
+- :first_name: Hey
+  :last_name: Jude
+  :email: what@gmai.com
+  :telephone: ";lkjasdf"
+- :first_name: Bebe
+  :last_name: Durham
+  :email: bebe@gmail.com
+  :telephone: '46546446'
+:aimee:
+- :first_name: Be be
+  :last_name: " "
+  :email: bebe@gmail.com
+  :telephone: '5555555555'
+- :first_name: Fred
+  :last_name: Durham
+  :email: elmachine@gmail.com
+  :telephone: '9402631263'
+:fred:
+- :first_name: Aimee
+  :last_name: Lyles
+  :email: aimee@gmail.com
+  :telephone: '8069301397'

@@ -42,6 +42,10 @@ class ContactStorage
     @storage[username]
   end
 
+  def []=(key, value)
+    @storage[key] = value
+  end
+
   def has_user?(username)
     @storage.has_key?(username)
   end
