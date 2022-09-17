@@ -1,25 +1,26 @@
 <section class="show-contacts-page-container">
   <h2><%= "#{session[:username]}'s Contacts" %></h2>
-  <div id="headers">
-    <span>
+  <div class="show-contacts-table-grid">
+    <span class="contacts-header">
       <strong>First Name</strong>
     </span>
-    <span>
+    <span class="contacts-header">
       <strong>Last Name</strong>
     </span>
-    <span>
+    <span class="contacts-header">
       <strong>Email Address</strong>
     </span>
-    <span>
+    <span class="contacts-header">
       <strong>Telephone</strong>
     </span>
-  </div>
+    <span class="contacts-header"> 
+      <strong>Edit/Delete</strong>
+    </span>
 
-  <% if @contacts.empty? %>
-    <p>No Contacts to Display</p>
-  <% else %>
-    <% @contacts.each do |contact| %>
-      <div class="display-contact-row">
+    <% if @contacts.empty? %>
+      <p>No Contacts to Display</p>
+    <% else %>
+      <% @contacts.each do |contact| %>
         <span>
           <%= contact[:first_name] %>
         </span>
@@ -32,17 +33,20 @@
         <span>
           <%= contact[:telephone] %>
         </span>
-      </div>
+        <span class="edit-delete-buttons-container">
+          <form action="/edit_contact" method="get">
+            <input type="hidden" name="contact_id" value=<%= contact[:id] %> />
+            <input type="submit" value="Edit" />
+          </form>
+          <form action="/delete_contact" method="post">
+            <input type="hidden" name="contact_id" value=<%= contact[:id] %> />
+            <input type="submit" value="Delete"
+                   onclick="return confirm('Are you sure you want to delete this contact?')" />
+          </form>
+        </span>
+      <% end %>
     <% end %>
-  <% end %>
-  <%# <div class="contact-row">
-    <span class="contact-button">
-        <button>Edit</button>
-      </span>
-      <span class="contact-button">
-        <button>Delete</button>
-    </span>
-  </div> %>
+  </div>
   <button>
     <a href="/create_contact">Create New Contact</a>
   </button>

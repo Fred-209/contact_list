@@ -35,12 +35,13 @@ helpers do
 
   def get_contacts_for_username(username)
     contact_list = @contact_storage.user_contact_list(username.to_sym)
-    
+
     return [] unless contact_list
     contact_list.map { |contact| contact.to_h}
   end
 
 end
+
 
  #==============================================================================
 
@@ -68,25 +69,29 @@ get '/sign_in' do
 end
 
 post '/sign_in' do 
-  @username = params['username']
-  @password = params['password']
+  if signed_in? 
+    redirect "/list/#{session[:username] }"
+  else
+    @username = params['username'].downcase
+    @password = params['password']
 
-  if @user_list.has_user?(@username)
-    if @user_list.correct_user_password?(@username, @password)
-      session[:signed_in] = true;
-      session[:message] = "#{@username} has successfully signed in."
-      session[:username] = @username
+    if @user_list.has_user?(@username)
+      if @user_list.correct_user_password?(@username, @password)
+        session[:signed_in] = true;
+        session[:message] = "#{@username} has successfully signed in."
+        session[:username] = @username
 
-      redirect "/list/#{@username}"
-    else
-      session[:message] = "Invalid password. Try again."
+        redirect "/list/#{@username}"
+      else
+        session[:message] = "Invalid password. Try again."
+
+        erb (:sign_in)
+      end
+    else  
+      session[:message] = "Username not found. Try logging in again."
 
       erb (:sign_in)
     end
-  else  
-    session[:message] = "Username not found. Try logging in again."
-
-    erb (:sign_in)
   end
 end
 
@@ -162,5 +167,38 @@ post "/sign_out" do
   session[:message] = "Successfully signed out"
 
   redirect "/"
+end
+
+# Edit contact form
+get "/edit_contact" do 
+  contact_id = params['contact_id']
+  username = session[:username].to_sym
+  @contact = @contact_storage[username].find { |contact| contact.id.to_s == contact_id }
+
+  erb(:edit_contact)
+
+
+end
+
+post "/edit_contact" do 
+  username = session[:username].to_sym
+  new_contact_info = { first_name: params['first_name'], last_name: params['last_name'],
+                       email: params['email'], telephone: params['telephone'] }
+  contact_id = params['contact_id'].to_i
+
+  @contact_storage.update_contact(username, contact_id, new_contact_info)
+  session[:message] = "Contact entry details updated."
+
+  redirect ("/list/#{session[:username]}")
+  # contact_id = params['contact_id']
+  # username = session[:username].to_sym
+  # @contact = @contact_storage[username].find { |contact| contact.id.to_s == contact_id }
+end
+
+post "/delete_contact" do
+  @contact_storage.delete_contact(session[:username].to_sym, params['contact_id'])
+  session[:message] = "Contact deleted"
+
+  redirect "/list/#{session[:username]}"
 end
 
