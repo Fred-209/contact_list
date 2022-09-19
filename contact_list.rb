@@ -2,25 +2,25 @@
 
 require 'sinatra'
 
-require_relative 'lib/contact_storage'
-require_relative 'lib/user_logins'
+require_relative 'lib/contacts_database'
 
 configure do 
   enable :sessions
-  set :session_secret, "its_a_secret"
+  set :session_secret, "its_not_a_secret"
 end
 
 configure(:development) do 
   require 'sinatra/reloader'
   require 'pry'
   also_reload "/css/main.css"
-  also_reload "../lib/contact_storage.rb"
 end 
 
 before do 
-  @user_list = UserLogins.new
-  @contact_storage = ContactStorage.new
-  
+  @contact_storage = ContactsDatabase.new(logger)
+end
+
+after do 
+  @contact_storage.disconnect
 end
 
 helpers do 
@@ -34,10 +34,9 @@ helpers do
   end
 
   def get_contacts_for_username(username)
-    contact_list = @contact_storage.user_contact_list(username.to_sym)
+    contact_list = @contact_storage.user_contact_list(username)
 
-    return [] unless contact_list
-    contact_list.map { |contact| contact.to_h}
+    contact_list ? @contact_storage.user_contact_list(username) : []
   end
 
 end
@@ -75,8 +74,8 @@ post '/sign_in' do
     @username = params['username'].downcase
     @password = params['password']
 
-    if @user_list.has_user?(@username)
-      if @user_list.correct_user_password?(@username, @password)
+    if @contact_storage.username_exists?(@username)
+      if @contact_storage.correct_user_password?(@username, @password)
         session[:signed_in] = true;
         session[:message] = "#{@username} has successfully signed in."
         session[:username] = @username
@@ -117,14 +116,14 @@ post '/new_user' do
   @password = params['password'].strip
 
   if invalid_characters_in_login?(@username, @password)
-     session[:message] = "Only letters, numbers, and underscores are allowed in your username. No spaces allowed in password."
+     session[:message] = "Only letters, numbers, and underscores are allowed in your username. 
+                          No spaces allowed in password."
     erb(:new_user)
-  elsif @user_list.has_user?(@username)
+  elsif @contact_storage.username_exists?(@username)
     session[:message] = "That username already exists."
     erb(:new_user)
   else
-    @user_list.create_user(@username, @password)
-    @contact_storage[@username.downcase.to_sym] = []
+    @contact_storage.create_user(@username, @password)
 
     session[:message] = "New user #{@username} has been created."
     session[:signed_in] = true
@@ -145,20 +144,18 @@ end
 
 #Add a new contact to a user's storage
 post "/create_contact" do
-  contact_params = {
-    first_name: params['first_name'],
-    last_name: params['last_name'],
-    email: params['email'],
-    telephone: params['telephone']
-  }
+  contact_params = [
+    params['first_name'],
+    params['last_name'],
+    params['email'],
+    params['telephone']
+  ]
   
-  @contact_storage.create_contact(session[:username].to_sym, contact_params)
+  @contact_storage.create_contact(session[:username], contact_params)
   session[:message] = "New Contact Added to Storage"
 
   redirect "/"
 end
-
-
 
 # Sign out current user
 post "/sign_out" do 
@@ -172,8 +169,8 @@ end
 # Edit contact form
 get "/edit_contact" do 
   contact_id = params['contact_id']
-  username = session[:username].to_sym
-  @contact = @contact_storage[username].find { |contact| contact.id.to_s == contact_id }
+  username = session[:username]
+  @contact = @contact_storage.user_contact_list(username).find { |contact| contact['id'].to_s == contact_id }
 
   erb(:edit_contact)
 
@@ -181,22 +178,19 @@ get "/edit_contact" do
 end
 
 post "/edit_contact" do 
-  username = session[:username].to_sym
-  new_contact_info = { first_name: params['first_name'], last_name: params['last_name'],
-                       email: params['email'], telephone: params['telephone'] }
+  username = session[:username]
+  new_contact_info = [params['first_name'], params['last_name'],
+                      params['email'], params['telephone'] ]
   contact_id = params['contact_id'].to_i
 
   @contact_storage.update_contact(username, contact_id, new_contact_info)
   session[:message] = "Contact entry details updated."
 
   redirect ("/list/#{session[:username]}")
-  # contact_id = params['contact_id']
-  # username = session[:username].to_sym
-  # @contact = @contact_storage[username].find { |contact| contact.id.to_s == contact_id }
 end
 
 post "/delete_contact" do
-  @contact_storage.delete_contact(session[:username].to_sym, params['contact_id'])
+  @contact_storage.delete_contact(session[:username], params['contact_id'])
   session[:message] = "Contact deleted"
 
   redirect "/list/#{session[:username]}"

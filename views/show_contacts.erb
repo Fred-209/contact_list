@@ -22,24 +22,24 @@
     <% else %>
       <% @contacts.each do |contact| %>
         <span>
-          <%= contact[:first_name] %>
+          <%= contact['first_name'] %>
         </span>
         <span>
-          <%= contact[:last_name] %>
+          <%= contact['last_name'] %>
         </span>
         <span>
-          <%= contact[:email] %>
+          <%= contact['email'] %>
         </span>
         <span>
-          <%= contact[:telephone] %>
+          <%= contact['telephone'] %>
         </span>
         <span class="edit-delete-buttons-container">
           <form action="/edit_contact" method="get">
-            <input type="hidden" name="contact_id" value=<%= contact[:id] %> />
+            <input type="hidden" name="contact_id" value=<%= contact['id'] %> />
             <input type="submit" value="Edit" />
           </form>
           <form action="/delete_contact" method="post">
-            <input type="hidden" name="contact_id" value=<%= contact[:id] %> />
+            <input type="hidden" name="contact_id" value=<%= contact['id'] %> />
             <input type="submit" value="Delete"
                    onclick="return confirm('Are you sure you want to delete this contact?')" />
           </form>

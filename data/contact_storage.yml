@@ -2,9 +2,9 @@
 :admin:
 - :id: 2
   :first_name: This
-  :last_name: 'is '
+  :last_name: is
   :email: a@.com
-  :telephone: new value
+  :telephone: some other phone number
 - :id: 3
   :first_name: Bebe
   :last_name: Durham

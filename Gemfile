@@ -8,6 +8,7 @@ gem 'puma'
 gem 'bcrypt'
 gem 'yaml'
 gem 'erubis'
+gem 'pg'
 
 group :development do 
   gem 'minitest'

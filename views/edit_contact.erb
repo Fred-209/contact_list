@@ -3,26 +3,26 @@
   <form class="edit-contact-form" action="/edit_contact" method="post">
     <div>
       <label for="first_name">First Name:</label>
-      <input type="text" name="first_name" id="first_name" value=<%= @contact.first_name %> required>
+      <input type="text" name="first_name" id="first_name" value=<%= @contact['first_name'] %> required>
     </div>
 
     <div>
       <label for="last_name">Last Name:</label>
-      <input type="text" name="last_name" id="last_name" value=<%= @contact.last_name %> required>
+      <input type="text" name="last_name" id="last_name" value=<%= @contact['last_name'] %> required>
     </div>
 
     <div>
       <label for="email">Email:</label>
-      <input type="text" name="email" id="email" value=<%= @contact.email %> required>
+      <input type="text" name="email" id="email" value=<%= @contact['email'] %> required>
     </div>
 
     <div>
       <label for="telephone">Telephone:</label>
-      <input type="text" name="telephone" id="telephone" value=<%= @contact.telephone %> required>
+      <input type="text" name="telephone" id="telephone" value=<%= @contact['telephone'] %> required>
     </div>
 
     <div>
-      <input type="hidden" name="contact_id" value=<%= @contact.id %> />
+      <input type="hidden" name="contact_id" value=<%= @contact['id'] %> />
       <input type="submit" value="Save Changes" 
             onclick="return confirm('Are you sure you want to save these changes?')" />
     </div>
